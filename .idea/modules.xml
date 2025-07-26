@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/quark.iml" filepath="$PROJECT_DIR$/.idea/quark.iml" />
       <module fileurl="file://$PROJECT_DIR$/quark-task-ui/quark-task-ui.iml" filepath="$PROJECT_DIR$/quark-task-ui/quark-task-ui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/quark-task.main.iml" filepath="$PROJECT_DIR$/.idea/modules/quark-task.main.iml" />
     </modules>
   </component>
 </project>

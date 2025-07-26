@@ -1,0 +1,26 @@
+spring:
+  application:
+    name: quark-task
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/quark-task
+  datasource:
+    url: jdbc:postgresql://localhost:5434/appdb
+    username: appuser
+    password: appsecret
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+server:
+  port: 8181
+
+keycloak:
+  auth-server-url: http://localhost:8080
+  realm: quark-task
+  resource: quark-task
+  bearer-only: true

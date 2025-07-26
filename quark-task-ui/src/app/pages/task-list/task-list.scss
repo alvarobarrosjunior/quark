@@ -1,0 +1,34 @@
+.task-list-container {
+  padding: 16px;
+  margin: auto;
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    min-width: 400px;
+  }
+}
+
+.text-center {
+  text-align: center;
+  color: black;
+  background-color: blueviolet;
+}
+
+@media (max-width: 600px) {
+  .task-list-container {
+    padding: 4px;
+    table {
+      font-size: 0.85em;
+    }
+    th, td {
+      padding: 4px 8px !important;
+    }
+    .mat-header-cell, .mat-cell {
+      white-space: nowrap;
+    }
+    button {
+      min-width: 32px !important;
+    }
+  }
+}
