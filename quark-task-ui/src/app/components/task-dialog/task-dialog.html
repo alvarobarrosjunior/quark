@@ -1,0 +1,15 @@
+<div class="modal-header">
+  <h2>Editar Tarefa</h2>
+  <button mat-icon-button (click)="onCancel()" aria-label="Fechar">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<app-task-form [task]="data.task" [form]="data.form" class="modal-form">
+  <button mat-raised-button color="primary" type="submit" [disabled]="data.form.invalid" (click)="onSubmit(data.form.value)">
+    Atualizar
+  </button>
+  <button mat-button type="button" (click)="onCancel()">
+    Cancelar
+  </button>
+</app-task-form>

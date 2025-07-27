@@ -32,3 +32,23 @@
     }
   }
 }
+
+.id{
+  width: calc(25% - 20px);
+  margin: 0 10px;
+}
+
+.titleOrDescription{
+  width: calc(100% - 20px);
+  margin: 0 10px;
+}
+
+.priority{
+  width: calc(30% - 20px);
+  margin: 0 10px;
+}
+
+.owner {
+  width: calc(30% - 20px);
+  margin: 0 10px;
+}

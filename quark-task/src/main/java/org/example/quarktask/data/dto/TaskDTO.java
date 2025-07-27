@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.example.quarktask.data.enums.Priority;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -14,7 +14,7 @@ public class TaskDTO {
     private String title;
     private String description;
     private String owner;
-    private LocalDate deadline;
+    private LocalDateTime deadline;
     private Priority priority;
     private boolean completed;
 }

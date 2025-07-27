@@ -1,8 +1,41 @@
 <div class="task-list-container">
-  <mat-form-field appearance="outline">
-    <mat-label>Filtrar tarefas</mat-label>
-    <input matInput (keyup)="applyFilter($event)" placeholder="Digite para filtrar">
-  </mat-form-field>
+  <form [formGroup]="filterForm" class="filter-form" style="margin-bottom:24px;">
+    <mat-form-field appearance="fill" class="id">
+      <mat-label>Número</mat-label>
+      <input matInput formControlName="id" placeholder="Filtrar por título">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="titleOrDescription">
+      <mat-label>Título / Description</mat-label>
+      <input matInput formControlName="titleOrDescription" placeholder="Filtrar por título">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="owner">
+      <mat-label>Responsável</mat-label>
+      <mat-select formControlName="owner">
+        <mat-option value="">Todos</mat-option>
+        @for (user of users; track user.id) {
+          <mat-option [value]="user.username">
+            {{ user.firstName }} {{ user.lastName }}
+          </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill" class="priority">
+      <mat-label>Prioridade</mat-label>
+      <mat-select formControlName="priority">
+        <mat-option value="">Todas</mat-option>
+        @for (key of priorityKeys; track key) {
+          <mat-option [value]="key">{{ priorityEnum[key] }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="button" (click)="applyFilters()">
+      Filtrar
+    </button>
+  </form>
 
   <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
@@ -18,34 +51,23 @@
 
     <ng-container matColumnDef="owner">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Responsável</th>
-      <td mat-cell *matCellDef="let task">{{task.owner}}</td>
+      <td mat-cell *matCellDef="let task">{{ getOwnerName(task.owner) }}</td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Ações</th>
       <td mat-cell *matCellDef="let task">
-<!--        <button mat-icon-button aria-label="Consultar" (click)="consultar(task)">-->
-<!--          <mat-icon>search</mat-icon>-->
-<!--        </button>-->
-<!--        <button mat-icon-button aria-label="Editar" (click)="editar(task)">-->
-<!--          <mat-icon>edit</mat-icon>-->
-<!--        </button>-->
-<!--        <button mat-icon-button aria-label="Remover" (click)="remover(task)">-->
-<!--          <mat-icon>delete</mat-icon>-->
-<!--        </button>-->
-<!--        <button mat-icon-button aria-label="Concluir" (click)="concluir(task)">-->
-<!--          <mat-icon>check_circle</mat-icon>-->
-<!--        </button>-->
+        <button mat-icon-button aria-label="Editar" (click)="editTask(task)">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Remover" (click)="removeTask(task)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button mat-icon-button aria-label="Concluir" (click)="concludeTask(task)">
+          <mat-icon>check_circle</mat-icon>
+        </button>
       </td>
     </ng-container>
-
-<!--    @if (dataSource.data.length === 0) {-->
-<!--      <tr>-->
-<!--        <td mat-cell colspan="4">-->
-<!--          Nenhuma tarefa com esses filtros foi encontrada!-->
-<!--        </td>-->
-<!--      </tr>-->
-<!--    }-->
 
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

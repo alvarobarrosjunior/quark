@@ -1,2 +1,6 @@
 <h2>Criar nova tarefa</h2>
-<app-task-form (formSubmit)="onSubmit($event)"></app-task-form>
+<app-task-form [form]="form">
+  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid" (click)="onSubmit(form.value)">
+    Salvar
+  </button>
+</app-task-form>

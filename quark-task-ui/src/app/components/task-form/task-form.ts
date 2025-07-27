@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { Task } from '../../models/task.model';
 import {KeycloakUser} from '../../models/user.enum';
 import {UserService} from '../../services/user/user';
@@ -13,29 +13,20 @@ import {Priority} from '../../models/priority.enum';
 })
 export class TaskForm implements OnInit {
   @Input() task?: Task;
+  @Input() form!: FormGroup;
   @Input() readTask?: boolean = false;
   @Output() formSubmit = new EventEmitter<Task>();
 
-  form!: FormGroup;
+
+  today = new Date();
   users: KeycloakUser[] = [];
   priorityEnum = Priority;
   priorityKeys = Object.keys(Priority) as Array<keyof typeof Priority>;
 
-  constructor(private fb: FormBuilder, private userService: UserService) {}
+  constructor(private userService: UserService) {}
 
   ngOnInit() {
     this.initUserList();
-
-    console.log(this.priorityKeys)
-
-    this.form = this.fb.group({
-      id: [this.task?.id ?? null],
-      title: [this.task?.title ?? '', Validators.required],
-      owner: [this.task?.owner ?? '', Validators.required],
-      description: [this.task?.description ?? '', Validators.required],
-      priority: [this.task?.priority ?? 'HIGH', Validators.required],
-      deadline: [this.task?.deadline ?? '', Validators.required]
-    });
   }
 
   submit() {

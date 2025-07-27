@@ -17,6 +17,13 @@ import { CreateTaskComponent } from './pages/create-task/create-task';
 import { TaskForm } from './components/task-form/task-form';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatOption, MatSelect} from '@angular/material/select';
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import {MY_DATE_FORMATS} from './format/date-format';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import {TaskDialogComponent} from './components/task-dialog/task-dialog';
+import { Header } from './components/header/header';
+import { Footer } from './components/footer/footer';
 
 export function kcFactory(kcService: KeycloakService) {
   return () => kcService.init();
@@ -29,6 +36,9 @@ export function kcFactory(kcService: KeycloakService) {
     LoginComponent,
     CreateTaskComponent,
     TaskForm,
+    TaskDialogComponent,
+    Header,
+    Footer,
   ],
   imports: [
     ReactiveFormsModule,
@@ -44,8 +54,13 @@ export function kcFactory(kcService: KeycloakService) {
     MatSortModule,
     MatOption,
     MatSelect,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatSnackBarModule,
   ],
   providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
     provideHttpClient(withInterceptorsFromDi()),
     {
       provide: APP_INITIALIZER,

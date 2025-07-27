@@ -12,7 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.example.quarktask.data.enums.Priority;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -27,7 +27,7 @@ public class Task {
     private String title;
     private String description;
     private String owner;
-    private LocalDate deadline;
+    private LocalDateTime deadline;
     @Enumerated(EnumType.STRING)
     private Priority priority;
     private boolean completed;

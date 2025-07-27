@@ -9,7 +9,9 @@ import org.example.quarktask.data.dto.CreateTaskDTO;
 import org.example.quarktask.data.dto.TaskDTO;
 import org.example.quarktask.data.enums.Priority;
 import org.example.quarktask.service.TaskService;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -40,11 +41,12 @@ public class TaskController {
         content = @Content(mediaType = "application/json", schema = @Schema(implementation = TaskDTO.class)))
     @GetMapping
     public List<TaskDTO> list(
+        @RequestParam(required = false) Long id,
         @RequestParam(required = false) Priority priority,
-        @RequestParam(required = false) String owner,
-        @RequestParam(required = false) LocalDate deadline
+        @RequestParam(required = false) String titleOrDescription,
+        @RequestParam(required = false) String owner
     ) {
-        return taskService.filter(priority, owner, deadline);
+        return taskService.filter(id, titleOrDescription, priority, owner);
     }
 
     @Operation(summary = "Cria uma nova tarefa", description = "Cria uma nova tarefa com os dados fornecidos")
@@ -61,15 +63,25 @@ public class TaskController {
         content = @Content(mediaType = "application/json", schema = @Schema(implementation = TaskDTO.class)))
     @ApiResponse(responseCode = "404", description = "Tarefa não encontrada")
     @PutMapping("/{id}")
-    public TaskDTO update(@RequestParam Long id, @RequestBody CreateTaskDTO dto) {
+    public TaskDTO update(@PathVariable Long id, @RequestBody CreateTaskDTO dto) {
         return taskService.update(id, dto);
     }
 
     @Operation(summary = "Deleta uma tarefa", description = "Remove uma tarefa existente")
     @ApiResponse(responseCode = "204", description = "Tarefa deletada")
     @ApiResponse(responseCode = "404", description = "Tarefa não encontrada")
-    @PostMapping("/{id}/delete")
-    public void delete(@RequestParam Long id) {
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Long id) {
         taskService.delete(id);
     }
+
+    @Operation(summary = "Completa uma tarefa", description = "Marca a tarefa como concluída")
+    @ApiResponse(responseCode = "200", description = "Tarefa concluída",
+        content = @Content(mediaType = "application/json", schema = @Schema(implementation = TaskDTO.class)))
+    @ApiResponse(responseCode = "404", description = "Tarefa não encontrada")
+    @PutMapping("/{id}/complete")
+    public TaskDTO completeTask(@PathVariable Long id) {
+        return taskService.completeTask(id);
+    }
+
 }
