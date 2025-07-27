@@ -1,0 +1,42 @@
+<form [formGroup]="form" (ngSubmit)="submit()">
+  <mat-form-field appearance="fill" class="title">
+    <mat-label>Título</mat-label>
+    <input matInput formControlName="title" required [disabled]="readTask ?? false">
+    @if(form.get('title')?.hasError('required')) {
+      <mat-error>Título obrigatório</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="description">
+    <mat-label>Descrição</mat-label>
+    <textarea matInput formControlName="desciption" required [disabled]="readTask ?? false"></textarea>
+    @if(form.get('desciption')?.hasError('required')) {
+      <mat-error>escrição obrigatóri</mat-error>
+    }
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="owner">
+    <mat-label>Responsável</mat-label>
+    <mat-select formControlName="owner" required [disabled]="readTask ?? false">
+      @for (user of users; track user.id) {
+        <mat-option [value]="user.username">
+          {{ user.firstName }} {{ user.lastName }} ({{ user.username }})
+        </mat-option>
+      }
+    </mat-select>
+    <mat-error *ngIf="form.get('owner')?.hasError('required')">Responsável obrigatório</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="priority">
+    <mat-label>Prioridade</mat-label>
+    <mat-select formControlName="priority" required [disabled]="readTask ?? false">
+      @for (key of priorityKeys; track key) {
+        <mat-option [value]="key">{{ priorityEnum[key] }}</mat-option>
+      }
+    </mat-select>
+    <mat-error *ngIf="form.get('priority')?.hasError('required')">Prioridade obrigatório</mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill" class="deadline">
+    <mat-label>Deadline</mat-label>
+    <input matInput formControlName="deadline" required [disabled]="readTask ?? false">
+    <mat-error *ngIf="form.get('deadline')?.hasError('required')">Deadline obrigatório</mat-error>
+  </mat-form-field>
+  <button mat-raised-button color="primary" type="submit">Salvar</button>
+</form>

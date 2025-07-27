@@ -13,7 +13,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { TaskListComponent } from './pages/task-list/task-list';
 import { LoginComponent } from './pages/login/login';
-import { CreateTask } from './pages/create-task/create-task';
+import { CreateTaskComponent } from './pages/create-task/create-task';
+import { TaskForm } from './components/task-form/task-form';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatOption, MatSelect} from '@angular/material/select';
 
 export function kcFactory(kcService: KeycloakService) {
   return () => kcService.init();
@@ -24,9 +27,12 @@ export function kcFactory(kcService: KeycloakService) {
     App,
     TaskListComponent,
     LoginComponent,
-    CreateTask
+    CreateTaskComponent,
+    TaskForm,
   ],
   imports: [
+    ReactiveFormsModule,
+    MatButtonModule,
     BrowserModule,
     AppRoutingModule,
     MatTableModule,
@@ -36,6 +42,8 @@ export function kcFactory(kcService: KeycloakService) {
     MatIconModule,
     MatPaginatorModule,
     MatSortModule,
+    MatOption,
+    MatSelect,
   ],
   providers: [
     provideHttpClient(withInterceptorsFromDi()),

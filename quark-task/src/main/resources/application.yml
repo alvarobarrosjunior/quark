@@ -24,3 +24,5 @@ keycloak:
   realm: quark-task
   resource: quark-task
   bearer-only: true
+  client-id: admin-cli
+  client-secret: LoEo6r9qQOQyKUgTkBseNjR3YJsP7CJL
