@@ -29,3 +29,14 @@ nav a.active,
 nav a:hover {
   color: #ffa500; /* Laranja combina com o logo */
 }
+
+.logout-btn {
+  color: #eeeeee;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+}
